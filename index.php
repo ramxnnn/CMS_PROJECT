@@ -4,12 +4,26 @@
     header('Location: login.php');
     exit(); 
   }
-require('reusables/connect.php');
 
-function is_admin() {
+  require('reusables/connect.php');
+
+  // Function to fetch game data and images from the RAWG API
+  function fetchRawgGameData($query) {
+      $apiKey = 'd580352359034650925ed7e4322f1afa'; 
+      $url = "https://api.rawg.io/api/games?key=" . $apiKey . "&page_size=1&search=" . urlencode($query);
+
+      $ch = curl_init();
+      curl_setopt($ch, CURLOPT_URL, $url);
+      curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+      $response = curl_exec($ch);
+      curl_close($ch);
+
+      return json_decode($response, true);
+  }
+
+  function is_admin() {
     return isset($_SESSION['role']) && $_SESSION['role'] === 'admin';
-}
-
+  }
 ?>
 
 <!DOCTYPE html>
@@ -22,36 +36,52 @@ function is_admin() {
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
   <link rel="stylesheet" href="public/styles.css">
   <style>
-    /* Your custom styles */
-    body {
-      background: linear-gradient(120deg, #f3f4f7, #c1d1f3);
+   body {
+      background: url('image/4.gif') no-repeat center center fixed;
+      background-size: cover;
       color: #343a40;
       font-family: 'Arial', sans-serif;
     }
+
     h1 {
       text-align: center;
       margin: 20px 0;
-      color: #2c3e50;
+      color: #f3f4f7;
       text-transform: uppercase;
+      font-size: 3rem; 
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); 
+      padding: 20px;
+      border-radius: 8px; 
     }
+
     .card {
       border: none;
       border-radius: 10px;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
       overflow: hidden;
       transition: transform 0.3s, box-shadow 0.3s;
+      display: flex;
+      flex-direction: column;
     }
+
     .card:hover {
       transform: scale(1.05);
       box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
     }
+
+    .card-body {
+      flex-grow: 1;
+    }
+
     .card-title {
-      color: #f3f4f7;
+      color: #f3f4f7; 
       font-weight: bold;
     }
+
     .card-text {
-      color: #f3f4f7;
+      color: #f3f4f7; 
     }
+
     .badge {
       background-color: #007bff;
       color: white;
@@ -59,12 +89,32 @@ function is_admin() {
       font-size: 14px;
       border-radius: 20px;
     }
+
     .button-center button {
       margin-top: 10px;
       transition: all 0.3s ease-in-out;
     }
+
     .button-center button:hover {
       transform: scale(1.1);
+    }
+
+    .game-image {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+    }
+
+    .row.card-deck {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+
+    .col-md-4 {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
     }
   </style>
 </head>
@@ -87,8 +137,12 @@ function is_admin() {
         $games = mysqli_query($connect, $query);
 
         foreach ($games as $game) {
+          $gameData = fetchRawgGameData($game['title']);
+          $imageUrl = isset($gameData['results'][0]['background_image']) ? $gameData['results'][0]['background_image'] : 'default-image.jpg'; 
+
           echo '<div class="col-md-4 mb-4 animate__animated animate__zoomIn"> 
             <div class="card">
+              <img src="' . $imageUrl . '" alt="' . htmlspecialchars($game['title']) . '" class="game-image">
               <div class="card-body">
                 <h5 class="card-title">' . htmlspecialchars($game['title']) . '</h5>
                 <p class="card-text"><strong>Description:</strong> ' . htmlspecialchars($game['description']) . '</p>
@@ -98,7 +152,6 @@ function is_admin() {
                 <span class="badge">' . htmlspecialchars($game['age_rating']) . '</span>
               </div>';
               
-          // Check if the logged-in user is an admin
           if (is_admin()) {
             echo '<div class="card-footer">
                     <div class="button-center text-center">
