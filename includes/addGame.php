@@ -1,6 +1,6 @@
 <?php
-include('resusables/connect.php');
-include('includes/functions.php');
+include('../reusables/connect.php');
+include('../includes/functions.php');
 secure();
 
 if (!is_admin()) {

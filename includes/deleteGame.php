@@ -1,6 +1,6 @@
 <?php
-include('reusables/connect.php');
-include('includes/functions.php');
+include('../reusables/connect.php');
+include('../includes/functions.php');
 
 secure();
 
