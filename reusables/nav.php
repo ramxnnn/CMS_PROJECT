@@ -1,12 +1,9 @@
 <?php
-// Check if a session is already active
 if (session_status() === PHP_SESSION_NONE) {
-    session_start(); // Start the session if not already started
+    session_start(); 
 }
 
-// Check if the function is already declared
 if (!function_exists('is_admin')) {
-    // Helper function to check if the user is an admin
     function is_admin() {
         return isset($_SESSION['role']) && $_SESSION['role'] === 'admin';
     }

@@ -17,7 +17,7 @@ if (isset($_POST['loginButton'])) {
         // Set session variables
         $_SESSION['id'] = $record['id'];
         $_SESSION['email'] = $record['email'];
-        $_SESSION['role'] = $record['role']; // Store role ('admin' or 'user')
+        $_SESSION['role'] = $record['role']; 
 
         set_message('Login successful!', 'success');
         header('Location: index.php');

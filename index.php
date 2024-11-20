@@ -1,8 +1,8 @@
 <?php 
-session_start(); // Start session to access user role
+session_start(); 
 require('reusables/connect.php');
 
-// Helper function to check if the logged-in user is an admin
+
 function is_admin() {
     return isset($_SESSION['role']) && $_SESSION['role'] === 'admin';
 }
