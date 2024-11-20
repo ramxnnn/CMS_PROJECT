@@ -1,10 +1,15 @@
 <?php 
-session_start(); 
+  session_start();
+  if (!isset($_SESSION['id'])) {
+    header('Location: login.php');
+    exit(); 
+  }
 require('reusables/connect.php');
 
 function is_admin() {
     return isset($_SESSION['role']) && $_SESSION['role'] === 'admin';
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -71,6 +76,7 @@ function is_admin() {
       </div>
     </div>
   </div>
+  
   <div class="container">
     <h1 class="animate__animated animate__fadeInDown">Games</h1>
     <div class="row card-deck">
@@ -114,6 +120,7 @@ function is_admin() {
       ?>
     </div>
   </div>
+
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.4.4/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
