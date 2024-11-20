@@ -1,4 +1,14 @@
 <?php
+include('resusables/connect.php');
+include('includes/functions.php');
+secure();
+
+if (!is_admin()) {
+    set_message('You are not authorized to add games!', 'danger');
+    header('Location: index.php');
+    exit();
+}
+
 if (isset($_POST['addGame'])) {
     $title = $_POST['title'];
     $genre = $_POST['genre'];
