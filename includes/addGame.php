@@ -1,5 +1,5 @@
 <?php
-include('../resusables/connect.php');
+include('../reusables/connect.php');
 include('../includes/functions.php');
 secure();
 
@@ -20,11 +20,9 @@ if (isset($_POST['addGame'])) {
     $multiplayer = $_POST['multiplayer'];
     $age_rating = $_POST['age_rating'];
     $price = $_POST['price'];
-
-    require('../reusables/connect.php');
-
+  require('../reusables/connect.php');
     // Insert into the games table
-    $query = "INSERT INTO games (`title`, `genre`, `publisher`, `review_score`, `release_year`) VALUES (
+    $query = "INSERT INTO games (title, genre, publisher, review_score, release_year) VALUES (
         '" . mysqli_real_escape_string($connect, $title) . "',
         '" . mysqli_real_escape_string($connect, $genre) . "',
         '" . mysqli_real_escape_string($connect, $publisher) . "',

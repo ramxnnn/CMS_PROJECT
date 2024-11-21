@@ -1,46 +1,85 @@
-<?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start(); 
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navigation Bar</title>
+    <style>
+        .box2 {
+            margin-top: 20px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            position: relative;
+        }
 
-if (!function_exists('is_admin')) {
-    function is_admin() {
-        return isset($_SESSION['role']) && $_SESSION['role'] === 'admin';
-    }
-}
-?>
+        .rectangle2 {
+            -webkit-backdrop-filter: blur(4px) brightness(100%);
+            backdrop-filter: blur(4px) brightness(100%);
+            background-color: #d9d9d91a;
+            border: 2px solid #ffffff80;
+            border-radius: 20px;
+            height: 90px;
+            width: 90%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            z-index: 1000;
+        }
 
-<nav class="navbar navbar-expand-lg" style="background-color: #343a40;">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="index.php" style="color: #4adf17;">LMS</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <?php if (is_admin()): ?>
-        <li class="nav-item">
-          <a class="nav-link" href="add.php" style="color: white;">Add Game</a>
-        </li>
-        <?php endif; ?>
-        <li class="nav-item">
-          <a class="nav-link" href="logout.php" style="color: white;">Logout</a>
-        </li>
-      </ul>
+        .navbar {
+            display: flex;
+            width: 100%;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .navbar-brand {
+            flex-grow: 1;
+            display: flex;
+        }
+
+        .navbar-nav {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+            font-size: 1rem;
+            font-weight: bold;
+            font-family: 'Helvetica Neue', sans-serif;
+        }
+
+        .nav-item a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav-item a:hover {
+            color: #ffbb33;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="box2">
+        <div class="rectangle2">
+            <nav class="navbar">
+                <div class="navbar-brand">
+                    <a href="index.php">
+                        <img src="Image/SmallVersionLogo.png" alt="Game Central Logo" style="max-height: 80px; max-width: 80px;">
+                    </a>
+                </div>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link-active" href="add.php">Add</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link-logout" href="logout.php">Logout</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
     </div>
-  </div>
-</nav>
-
-<style>
-  .navbar-nav .nav-link {
-    color: white;
-  }
-  
-  .navbar-nav .nav-link:hover {
-    color: #4adf17;
-  }
-
-  .navbar-brand:hover {
-    color: #4adf17;
-  }
-</style>
+</body>
+</html>
