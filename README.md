@@ -65,16 +65,6 @@ CREATE TABLE gameDetails (
     FOREIGN KEY (game_id) REFERENCES games(game_id)
 );
 
-You can use the following SQL commands to insert sample data into both tables:
-
--- Insert sample game into `games`
-INSERT INTO games (name, genre, release_date, platform)
-VALUES ('The Witcher 3: Wild Hunt', 'RPG', '2015-05-19', 'PC, PS4, Xbox One');
-
--- Insert sample game details into `gameDetails`
-INSERT INTO gameDetails (game_id, description, developer, publisher, rating, price)
-VALUES (1, 'An open-world RPG where players take on the role of Geralt of Rivia...', 'CD Projekt Red', 'CD Projekt', 9.5, 59.99);
-
 ##License
 ### Breakdown:
 1. **Project Overview**: Describes the purpose of the project and the structure of the tables.
