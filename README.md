@@ -64,14 +64,3 @@ CREATE TABLE gameDetails (
     price DECIMAL(10,2),
     FOREIGN KEY (game_id) REFERENCES games(game_id)
 );
-
-##License
-### Breakdown:
-1. **Project Overview**: Describes the purpose of the project and the structure of the tables.
-2. **Tables Description**: Lists the columns in each table with their data types and purpose.
-3. **Setup Instructions**: Explains how to create the database, tables, and insert sample data.
-4. **Query Examples**: Provides example queries to interact with the database.
-5. **Contributing**: Mentions how to contribute to the project.
-6. **License**: Includes a basic licensing section.
-
-This version of the `README.md` is more streamlined and focuses on the essentials. Let me know if you'd like to adjust it further!
