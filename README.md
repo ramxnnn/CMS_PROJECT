@@ -34,7 +34,7 @@ The `gameDetails` table stores more in-depth information for each game.
 
 ## Setup Instructions
 
-### 1. Create Database and Tables
+### Create Database and Tables
 Use the following SQL commands to set up the database and tables:
 
 ```sql
