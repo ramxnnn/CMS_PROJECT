@@ -4,7 +4,7 @@ include('../includes/functions.php');
 secure();
 
 if (!is_admin()) {
-    set_message('You are not authorized to add games!', 'danger');
+    set_message('You are not authorized to update games!', 'danger');
     header('Location: index.php');
     exit();
 }
@@ -22,31 +22,28 @@ if (isset($_POST['updateGame'])) {
     $age_rating = $_POST['age_rating'];
     $price = $_POST['price'];
 
-    require('../reusables/connect.php');
+    // Update games table
+    $query = "UPDATE games SET 
+        title = '" . mysqli_real_escape_string($connect, $title) . "',
+        genre = '" . mysqli_real_escape_string($connect, $genre) . "',
+        publisher = '" . mysqli_real_escape_string($connect, $publisher) . "',
+        review_score = '" . mysqli_real_escape_string($connect, $review_score). "',
+        release_year = '" . mysqli_real_escape_string($connect, $release_year) . "' 
+        WHERE game_id = " . intval($game_id);
 
-    $query = "UPDATE `games` SET 
-        `title` = '" . mysqli_real_escape_string($connect, $title) . "',
-        `genre` = '" . mysqli_real_escape_string($connect, $genre) . "',
-        `publisher` = '" . mysqli_real_escape_string($connect, $publisher) . "',
-        `review_score` = '" . mysqli_real_escape_string($connect, $review_score) . "',
-        `release_year` = '" . mysqli_real_escape_string($connect, $release_year) . "' 
-        WHERE `game_id` = '" . mysqli_real_escape_string($connect, $game_id) . "'";
+    if (mysqli_query($connect, $query)) {
+        // Update gamedetails table
+        $detailsQuery = "UPDATE gamedetails SET 
+            description = '" . mysqli_real_escape_string($connect, $description) . "',
+            platform = '" . mysqli_real_escape_string($connect, $platform) . "',
+            multiplayer = '" . mysqli_real_escape_string($connect, $multiplayer) . "',
+            age_rating = '" . mysqli_real_escape_string($connect, $age_rating) . "',
+            price = '" . mysqli_real_escape_string($connect, $price) . "' 
+            WHERE game_id = " . intval($game_id);
 
-    $gameUpdate = mysqli_query($connect, $query);
-
-    if ($gameUpdate) {
-        $detailsQuery = "UPDATE `gamedetails` SET 
-            `description` = '" . mysqli_real_escape_string($connect, $description) . "',
-            `platform` = '" . mysqli_real_escape_string($connect, $platform) . "',
-            `multiplayer` = '" . mysqli_real_escape_string($connect, $multiplayer) . "',
-            `age_rating` = '" . mysqli_real_escape_string($connect, $age_rating) . "',
-            `price` = '" . mysqli_real_escape_string($connect, $price) . "' 
-            WHERE `game_id` = '" . mysqli_real_escape_string($connect, $game_id) . "'";
-
-        $detailsUpdate = mysqli_query($connect, $detailsQuery);
-
-        if ($detailsUpdate) {
+        if (mysqli_query($connect, $detailsQuery)) {
             header("Location: ../index.php");
+            exit();
         } else {
             echo "There was an error updating game details: " . mysqli_error($connect);
         }
