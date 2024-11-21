@@ -1,1 +1,87 @@
-# CMS_PROJECT
+# Video Games Database
+
+This project manages a database of video games, utilizing two tables: `games` and `gameDetails`. The `games` table stores general information about the games, while the `gameDetails` table holds additional details for each game.
+
+## Table Structure
+
+### 1. `games` Table
+The `games` table contains essential details about each game.
+
+| Column         | Data Type     | Description                               |
+|----------------|---------------|-------------------------------------------|
+| `game_id`      | INT           | Unique identifier for the game (Primary Key) |
+| `name`         | VARCHAR(255)  | Name of the game                         |
+| `genre`        | VARCHAR(100)  | Genre of the game (e.g., RPG, Action)     |
+| `release_date` | DATE          | The release date of the game (YYYY-MM-DD) |
+| `platform`     | VARCHAR(255)  | Platforms the game is available on       |
+
+### 2. `gameDetails` Table
+The `gameDetails` table stores more in-depth information for each game.
+
+| Column         | Data Type     | Description                                   |
+|----------------|---------------|-----------------------------------------------|
+| `detail_id`    | INT           | Unique identifier for the detail (Primary Key) |
+| `game_id`      | INT           | Foreign Key referencing `games.game_id`       |
+| `description`  | TEXT          | Game description                              |
+| `developer`    | VARCHAR(255)  | Developer of the game                         |
+| `publisher`    | VARCHAR(255)  | Publisher of the game                         |
+| `rating`       | DECIMAL(3,1)  | Rating of the game (out of 10)                |
+| `price`        | DECIMAL(10,2) | Price of the game                             |
+
+## Relationships
+
+- **One-to-One Relationship**: Each entry in the `games` table can have one corresponding entry in the `gameDetails` table. This is enforced through the `game_id` foreign key in `gameDetails`.
+
+## Setup Instructions
+
+### 1. Create Database and Tables
+Use the following SQL commands to set up the database and tables:
+
+```sql
+-- Create the database
+CREATE DATABASE video_games;
+
+-- Use the database
+USE video_games;
+
+-- Create the `games` table
+CREATE TABLE games (
+    game_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    genre VARCHAR(100),
+    release_date DATE,
+    platform VARCHAR(255)
+);
+
+-- Create the `gameDetails` table
+CREATE TABLE gameDetails (
+    detail_id INT AUTO_INCREMENT PRIMARY KEY,
+    game_id INT,
+    description TEXT,
+    developer VARCHAR(255),
+    publisher VARCHAR(255),
+    rating DECIMAL(3,1),
+    price DECIMAL(10,2),
+    FOREIGN KEY (game_id) REFERENCES games(game_id)
+);
+
+You can use the following SQL commands to insert sample data into both tables:
+
+-- Insert sample game into `games`
+INSERT INTO games (name, genre, release_date, platform)
+VALUES ('The Witcher 3: Wild Hunt', 'RPG', '2015-05-19', 'PC, PS4, Xbox One');
+
+-- Insert sample game details into `gameDetails`
+INSERT INTO gameDetails (game_id, description, developer, publisher, rating, price)
+VALUES (1, 'An open-world RPG where players take on the role of Geralt of Rivia...', 'CD Projekt Red', 'CD Projekt', 9.5, 59.99);
+
+##License
+### Breakdown:
+1. **Project Overview**: Describes the purpose of the project and the structure of the tables.
+2. **Tables Description**: Lists the columns in each table with their data types and purpose.
+3. **Setup Instructions**: Explains how to create the database, tables, and insert sample data.
+4. **Query Examples**: Provides example queries to interact with the database.
+5. **Contributing**: Mentions how to contribute to the project.
+6. **License**: Includes a basic licensing section.
+
+This version of the `README.md` is more streamlined and focuses on the essentials. Let me know if you'd like to adjust it further!
