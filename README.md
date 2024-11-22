@@ -1,66 +1,55 @@
-# Video Games Database
+# Video Games Database CMS
 
-This project manages a database of video games, utilizing two tables: `games` and `gameDetails`. The `games` table stores general information about the games, while the `gameDetails` table holds additional details for each game.
+This is a content management system (CMS) built using PHP for managing a database of video games. The system allows users to store, update, and retrieve information about video games and their detailed descriptions.
 
-## Table Structure
+## Features
 
-### 1. `games` Table
-The `games` table contains essential details about each game.
-
-| Column         | Data Type     | Description                               |
-|----------------|---------------|-------------------------------------------|
-| `game_id`      | INT           | Unique identifier for the game (Primary Key) |
-| `name`         | VARCHAR(255)  | Name of the game                         |
-| `genre`        | VARCHAR(100)  | Genre of the game (e.g., RPG, Action)     |
-| `release_date` | DATE          | The release date of the game (YYYY-MM-DD) |
-| `platform`     | VARCHAR(255)  | Platforms the game is available on       |
-
-### 2. `gameDetails` Table
-The `gameDetails` table stores more in-depth information for each game.
-
-| Column         | Data Type     | Description                                   |
-|----------------|---------------|-----------------------------------------------|
-| `detail_id`    | INT           | Unique identifier for the detail (Primary Key) |
-| `game_id`      | INT           | Foreign Key referencing `games.game_id`       |
-| `description`  | TEXT          | Game description                              |
-| `developer`    | VARCHAR(255)  | Developer of the game                         |
-| `publisher`    | VARCHAR(255)  | Publisher of the game                         |
-| `rating`       | DECIMAL(3,1)  | Rating of the game (out of 10)                |
-| `price`        | DECIMAL(10,2) | Price of the game                             |
-
+- **Manage Games**: Add, view, and delete games.
+- **Manage Game Details**: Add detailed information for each game, including developer, publisher, rating, price, and description.
+- **One-to-One Relationship**: Each game in the database can have one corresponding entry with detailed information stored in a separate table.
+  
 ## Relationships
 
-- **One-to-One Relationship**: Each entry in the `games` table can have one corresponding entry in the `gameDetails` table. This is enforced through the `game_id` foreign key in `gameDetails`.
+- **One-to-One Relationship**: Each entry in the `games` table has one corresponding entry in the `gameDetails` table. This relationship is maintained via a foreign key reference.
 
 ## Setup Instructions
 
-### Create Database and Tables
-Use the following SQL commands to set up the database and tables:
+1. **Create the Database and Tables**: 
+   - Set up the database by running the provided SQL commands in your MySQL/MariaDB environment.
+   
+2. **Requirements**: 
+   - PHP version 7.0 or higher.
+   - MySQL/MariaDB for the database.
+   - Apache or Nginx with PHP support.
 
-```sql
--- Create the database
-CREATE DATABASE video_games;
+3. **Files**: 
+   - **index.php**: Displays the list of games.
+   - **add_game.php**: Adds new games to the database.
+   - **add_gameDetails.php**: Adds detailed information for each game.
+   - **edit_game.php**: Edits the game information.
+   - **edit_gameDetails.php**: Edits the game detail information.
+   - **delete_game.php**: Deletes a game from the database.
+   - **delete_gameDetails.php**: Deletes the game details from the database.
+   - **connect.php**: Contains database connection details.
 
--- Use the database
-USE video_games;
+## Usage
 
--- Create the `games` table
-CREATE TABLE games (
-    game_id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    genre VARCHAR(100),
-    release_date DATE,
-    platform VARCHAR(255)
-);
+1. **Add a Game**: Navigate to the "Add Game" section and enter the game details such as name, genre, release date, and platform.
+2. **Add Game Details**: After adding a game, you can input detailed information about the game, such as developer, publisher, description, rating, and price.
+3. **View Games**: View a list of all games along with their details.
+4. **Edit Game Information**: Update the game’s name, genre, release date, and platform.
+5. **Edit Game Details**: Update the detailed information about each game.
+6. **Delete a Game**: Remove a game from the database.
+7. **Delete Game Details**: Remove detailed information about a game.
 
--- Create the `gameDetails` table
-CREATE TABLE gameDetails (
-    detail_id INT AUTO_INCREMENT PRIMARY KEY,
-    game_id INT,
-    description TEXT,
-    developer VARCHAR(255),
-    publisher VARCHAR(255),
-    rating DECIMAL(3,1),
-    price DECIMAL(10,2),
-    FOREIGN KEY (game_id) REFERENCES games(game_id)
-);
+## Contributing
+
+Feel free to fork this repository, submit issues, and create pull requests for improvements.
+
+## License
+
+This project is licensed under the MIT License.
+
+## Acknowledgements
+
+- Built with PHP and MySQL for server-side scripting and database management.
