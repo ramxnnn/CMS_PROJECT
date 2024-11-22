@@ -19,8 +19,8 @@ This is a content management system (CMS) built using PHP for managing a databas
    
 2. **Requirements**: 
    - PHP version 7.0 or higher.
-   - MySQL/MariaDB for the database.
-   - Apache or Nginx with PHP support.
+   - MySQL for the database.
+   - Apache with PHP support.
 
 3. **Files**: 
    - **index.php**: Displays the list of games.
